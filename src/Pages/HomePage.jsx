@@ -1,7 +1,9 @@
 import Banner from '../components/Banner';
+import Footer from '../components/Footer';
 import RowPosters from '../components/RowPosters';
 import axios from 'axios';
 import { useState } from 'react';
+
 
 function HomePage() {
   return (
@@ -13,6 +15,7 @@ function HomePage() {
         <RowPosters title='Action Movies' endpoint='discover/movie?with_genres=28'size='sm'/>
         <RowPosters title='Romance Movies' endpoint='discover/movie?with_genres=10749'size='sm'/>
         <RowPosters title='Documentaries' endpoint='discover/movie?with_genres=99'size='sm'/>
+        <Footer />
     </div>
     </div>
   );
