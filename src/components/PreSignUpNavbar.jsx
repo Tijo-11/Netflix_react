@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
-import netflixLogo from '../assets/netflix-logo.png'; // Adjust path if needed
 
-export default function Navbar1({ showSignIn, setShowSignIn }) {
+export default function PreSignUpNavbar({ showSignIn, setShowSignIn }) {
   const { isAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -19,7 +18,7 @@ export default function Navbar1({ showSignIn, setShowSignIn }) {
     <nav className="bg-transparent absolute top-0 left-0 w-full z-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-4">
         <img
-          src={netflixLogo}
+          src="https://www.freepnglogos.com/uploads/netflix-logo-0.png"
           alt="Netflix Logo"
           className="h-8 sm:h-10"
         />

@@ -6,7 +6,6 @@ export default function GetStarted() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email) {
-      // Placeholder: Log email or redirect to sign-up flow
       console.log('Email submitted:', email);
     }
   };

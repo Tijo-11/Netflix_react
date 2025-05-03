@@ -1,7 +1,7 @@
 import React from 'react';
 import backgroundImage from '../assets/Background.jpeg';
 
-export default function Banner1() {
+export default function Banner() {
   return (
     <div
       className="relative bg-cover bg-center h-[70vh] flex items-center justify-center"

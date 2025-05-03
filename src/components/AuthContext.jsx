@@ -7,7 +7,6 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Check sessionStorage for cached auth state on mount
     const cachedAuth = sessionStorage.getItem('isAuthenticated');
     if (cachedAuth === 'true') {
       setIsAuthenticated(true);
@@ -17,7 +16,6 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (email, password) => {
-    // Mock validation: email and password must be non-empty
     if (email && password) {
       const userData = { email };
       setIsAuthenticated(true);
