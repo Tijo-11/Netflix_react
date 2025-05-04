@@ -1,14 +1,12 @@
 import Banner from '../components/Banner';
 import Footer from '../components/Footer';
 import RowPosters from '../components/RowPosters';
-import NavBar from '../components/Banner';
 
 
 
 function HomePage() {
   return (
     <div className="bg-[#141414] text-white min-h-screen pt-16">
-      <NavBar />
       <Banner />
       <div className="pt-4 px-4">
         <RowPosters title='Netflix Originals' endpoint='discover/tv?with_networks=213'size='lg' />

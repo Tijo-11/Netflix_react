@@ -1,42 +1,55 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { auth } from '../../firebase';
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
-    const cachedAuth = sessionStorage.getItem('isAuthenticated');
-    if (cachedAuth === 'true') {
-      setIsAuthenticated(true);
-      const cachedUser = sessionStorage.getItem('user');
-      if (cachedUser) setUser(JSON.parse(cachedUser));
-    }
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      if (firebaseUser) {
+        setIsAuthenticated(true);
+        setUser({ email: firebaseUser.email, uid: firebaseUser.uid });
+      } else {
+        setIsAuthenticated(false);
+        setUser(null);
+      }
+      setLoading(false); // Set loading to false once auth state is determined
+    });
+
+    return () => unsubscribe(); // Cleanup subscription on unmount
   }, []);
 
-  const login = (email, password) => {
-    if (email && password) {
-      const userData = { email };
+  const login = async (email, password) => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const firebaseUser = userCredential.user;
       setIsAuthenticated(true);
-      setUser(userData);
-      sessionStorage.setItem('isAuthenticated', 'true');
-      sessionStorage.setItem('user', JSON.stringify(userData));
+      setUser({ email: firebaseUser.email, uid: firebaseUser.uid });
       return true;
+    } catch (error) {
+      console.error('Login error:', error.message);
+      return false;
     }
-    return false;
   };
 
-  const logout = () => {
-    setIsAuthenticated(false);
-    setUser(null);
-    sessionStorage.removeItem('isAuthenticated');
-    sessionStorage.removeItem('user');
+  const logout = async () => {
+    try {
+      await signOut(auth);
+      setIsAuthenticated(false);
+      setUser(null);
+    } catch (error) {
+      console.error('Logout error:', error.message);
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
-      {children}
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, loading }}>
+      {loading ? <div>Loading...</div> : children}
     </AuthContext.Provider>
   );
 };

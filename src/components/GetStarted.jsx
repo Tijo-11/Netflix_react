@@ -1,13 +1,26 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function GetStarted() {
   const [email, setEmail] = useState('');
+  const navigate = useNavigate();
+
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (email) {
-      console.log('Email submitted:', email);
+    if (!email) {
+      alert('Please enter an email address.');
+      return;
     }
+    if (!validateEmail(email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+    navigate('/signup', { state: { email } });
   };
 
   return (

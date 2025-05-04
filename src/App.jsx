@@ -4,6 +4,7 @@ import { AuthProvider, AuthContext } from './components/AuthContext';
 import Navbar from './components/NavBar';
 import PreSignUpPage from './pages/PreSignUpPage';
 import Homepage from './pages/HomePage';
+import SignUpPage from './pages/SignUpPage'; // New import
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
@@ -11,69 +12,87 @@ const ProtectedRoute = ({ children }) => {
   return isAuthenticated ? children : <Navigate to="/" />;
 };
 
+// New component to handle loading and routes
+const AppContent = () => {
+  const { loading } = useContext(AuthContext);
+
+  if (loading) {
+    return (
+      <div className="bg-[#141414] text-white min-h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<PreSignUpPage />} />
+        <Route path="/signup" element={<SignUpPage />} /> {/* New route */}
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <Homepage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/categories"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <div className="pt-16 bg-[#141414] text-white min-h-screen">Categories</div>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/movies"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <div className="pt-16 bg-[#141414] text-white min-h-screen">Movies</div>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tv"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <div className="pt-16 bg-[#141414] text-white min-h-screen">TV Shows</div>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/mylist"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <div className="pt-16 bg-[#141414] text-white min-h-screen">My List</div>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/account"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <div className="pt-16 bg-[#141414] text-white min-h-screen">Account</div>
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Router>
+  );
+};
+
 export default function App() {
   return (
     <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<PreSignUpPage />} />
-          <Route
-            path="/home"
-            element={
-              <ProtectedRoute>
-                <Navbar />
-                <Homepage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/categories"
-            element={
-              <ProtectedRoute>
-                <Navbar />
-                <div className="pt-16 bg-[#141414] text-white min-h-screen">Categories</div>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/movies"
-            element={
-              <ProtectedRoute>
-                <Navbar />
-                <div className="pt-16 bg-[#141414] text-white min-h-screen">Movies</div>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/tv"
-            element={
-              <ProtectedRoute>
-                <Navbar />
-                <div className="pt-16 bg-[#141414] text-white min-h-screen">TV Shows</div>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/mylist"
-            element={
-              <ProtectedRoute>
-                <Navbar />
-                <div className="pt-16 bg-[#141414] text-white min-h-screen">My List</div>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/account"
-            element={
-              <ProtectedRoute>
-                <Navbar />
-                <div className="pt-16 bg-[#141414] text-white min-h-screen">Account</div>
-              </ProtectedRoute>
-            }
-          />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </Router>
+      <AppContent />
     </AuthProvider>
   );
 }

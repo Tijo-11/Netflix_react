@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import PreSignUpNavbar from '../components/PreSignUpNavbar';
 import Banner1 from '../components/Banner1';
 import GetStarted from '../components/GetStarted';
@@ -11,6 +12,13 @@ import RowPosters from '../components/RowPosters';
 
 export default function PreSignUpPage() {
   const [showSignIn, setShowSignIn] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.showSignIn) {
+      setShowSignIn(true);
+    }
+  }, [location.state]);
 
   return (
     <div className="bg-[#141414]">
@@ -24,7 +32,7 @@ export default function PreSignUpPage() {
         <>
           <GetStarted />
           <ArcSeparator />
-          <RowPosters title='Netflix Originals' endpoint='discover/tv?with_networks=213'size='lg' />
+          <RowPosters title='Netflix Originals' endpoint='discover/tv?with_networks=213' size='lg' />
           <ReasonsToJoin />
           <FAQ />
           <GetStarted />

@@ -9,13 +9,14 @@ export default function SignInForm() {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = login(email, password);
+    setError(''); // Clear previous errors
+    const success = await login(email, password);
     if (success) {
       navigate('/home');
     } else {
-      setError('Please enter a valid email and password.');
+      setError('Invalid email or password. Please try again.');
     }
   };
 
