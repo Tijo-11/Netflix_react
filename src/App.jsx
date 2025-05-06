@@ -1,10 +1,12 @@
+// src/App.jsx
 import React, { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, AuthContext } from './components/AuthContext';
 import Navbar from './components/NavBar';
 import PreSignUpPage from './pages/PreSignUpPage';
 import Homepage from './pages/HomePage';
-import SignUpPage from './pages/SignUpPage'; // New import
+import SignUpPage from './pages/SignUpPage';
+import LoginPage from './pages/LoginPage';
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
@@ -28,7 +30,8 @@ const AppContent = () => {
     <Router>
       <Routes>
         <Route path="/" element={<PreSignUpPage />} />
-        <Route path="/signup" element={<SignUpPage />} /> {/* New route */}
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/login" element={<LoginPage />} /> {/* New route */}
         <Route
           path="/home"
           element={

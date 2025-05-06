@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react'; // Add useContext
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../components/AuthContext'; // Import AuthContext
+import NetflixLogo from '../assets/Netflix_2015_logo.svg.png'; // Import the image
 
 function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -13,7 +14,7 @@ function Navbar() {
     <header className="fixed top-0 left-0 w-full h-16 bg-[#141414] text-white flex items-center justify-between px-4 z-10">
       <div className="flex items-center">
         <img
-          src="https://www.freepnglogos.com/uploads/netflix-logo-0.png"
+          src={NetflixLogo}
           alt="Netflix Logo"
           className="h-6"
         />

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import NetflixLogo from '../assets/Netflix_2015_logo.svg.png'; 
 
 export default function SignUpPage() {
   const [password, setPassword] = useState('');
@@ -27,7 +28,7 @@ export default function SignUpPage() {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate('/', { state: { showSignIn: true } });
+      navigate('/login'); // Navigate to login page after successful account creation
     } catch (error) {
       console.error('Account creation error:', error.message);
       switch (error.code) {
@@ -47,14 +48,14 @@ export default function SignUpPage() {
   };
 
   const handleSignInClick = () => {
-    navigate('/', { state: { showSignIn: true } });
+    navigate('/login'); // Updated to navigate to /login
   };
 
   return (
     <div className="bg-white text-black min-h-screen flex flex-col items-center justify-center py-8 px-4">
       <div className="w-full max-w-md flex flex-col items-center">
         <img
-          src="https://www.freepnglogos.com/uploads/netflix-logo-0.png"
+          src={NetflixLogo}
           alt="Netflix Logo"
           className="h-8 sm:h-10 mb-8"
         />
